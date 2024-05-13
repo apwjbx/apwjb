@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Page</title>
+    <style>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #20232a;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+header {
+            background-color: #333;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #ff4500;
+        }
+
+        #product-container {
+            background-color: #20232a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex; /* Change to flex */
+            flex-wrap: wrap; /* Add flex-wrap */
+            justify-content: flex-start; /* Align from left to right */
+        }
+
+        .product-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            width: calc(33.33% - 20px); /* Adjust the width */
+            margin-right: 20px; /* Add some margin between items */
+            margin-bottom: 20px; /* Add some margin between rows */
+        }
+
+        .product-item:last-child {
+            margin-right: 0; /* Remove margin for the last item in a row */
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-details p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .product-price {
+            font-weight: bold;
+            font-size: 18px;
+            color: #f00;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            background-color: #f00;
+            color: #fff;
+        }
+
+        .buy-button:hover {
+            background-color: #d00;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+/* Your CSS styles */
+        .dark-box {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .advert {
+    background:url('https://cdn.dribbble.om/users/3155389/screenshots/11704628/media/6eeda6e488edbf2883ac43e2c4b3c538.gif');
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), padding 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), border-radius 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.advert:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    background-color: #f8f8f8;
+    padding: 35px;
+    border-radius: 25px;
+}
+
+
+/* customizable snowflake styling */
+.snowflake {
+  color: #fff;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 5px #000;
+}
+
+.snowflake,.snowflake .inner{animation-iteration-count:infinite;animation-play-state:running}@keyframes snowflakes-fall{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}@keyframes snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;user-select:none;cursor:default;animation-name:snowflakes-shake;animation-duration:3s;animation-timing-function:ease-in-out}.snowflake .inner{animation-duration:10s;animation-name:snowflakes-fall;animation-timing-function:linear}.snowflake:nth-of-type(0){left:1%;animation-delay:0s}.snowflake:nth-of-type(0) .inner{animation-delay:0s}.snowflake:first-of-type{left:10%;animation-delay:1s}.snowflake:first-of-type .inner,.snowflake:nth-of-type(8) .inner{animation-delay:1s}.snowflake:nth-of-type(2){left:20%;animation-delay:.5s}.snowflake:nth-of-type(2) .inner,.snowflake:nth-of-type(6) .inner{animation-delay:6s}.snowflake:nth-of-type(3){left:30%;animation-delay:2s}.snowflake:nth-of-type(11) .inner,.snowflake:nth-of-type(3) .inner{animation-delay:4s}.snowflake:nth-of-type(4){left:40%;animation-delay:2s}.snowflake:nth-of-type(10) .inner,.snowflake:nth-of-type(4) .inner{animation-delay:2s}.snowflake:nth-of-type(5){left:50%;animation-delay:3s}.snowflake:nth-of-type(5) .inner{animation-delay:8s}.snowflake:nth-of-type(6){left:60%;animation-delay:2s}.snowflake:nth-of-type(7){left:70%;animation-delay:1s}.snowflake:nth-of-type(7) .inner{animation-delay:2.5s}.snowflake:nth-of-type(8){left:80%;animation-delay:0s}.snowflake:nth-of-type(9){left:90%;animation-delay:1.5s}.snowflake:nth-of-type(9) .inner{animation-delay:3s}.snowflake:nth-of-type(10){left:25%;animation-delay:0s}.snowflake:nth-of-type(11){left:65%;animation-delay:2.5s}
+</style>
+<div class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+  <div class="snowflake">
+    <div class="inner">*</div>
+  </div>
+</div>
+
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="https://discord.gg/4Hxg7EsC8B">Contact Us</a></li>
+            <li><a href="soon.htm">Promo Codes</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div id="product-container"></div>
+
+<div class="dark-box" id="advert">
+    <div class="advert">
+        <h2>Advertisement</h2>
+        <p>Please put your email address:</p>
+        <input type="email" id="email-input">
+        <p>Invoice Code: <span id="invoice-code"></span></p>
+        <p>Join our Discord to complete the payment: <a href="https://discord.gg/4Hxg7EsC8B" target="_blank">https://discord.gg/4Hxg7EsC8B</a></p>
+        <button onclick="completePayment()">Complete Payment</button>
+    </div>
+</div>
+
+<script>
+    // Check if products exist in local storage
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+    // Function to add a product
+    function addProduct() {
+        const productType = document.getElementById('product-type').value;
+        const productDescription = document.getElementById('product-description').value;
+        const productPrice = document.getElementById('product-price').value;
+
+        if (productType && productDescription && productPrice) {
+            const product = {
+                type: productType,
+                description: productDescription,
+                price: productPrice
+            };
+
+            products.push(product);
+            localStorage.setItem('products', JSON.stringify(products));
+            displayProducts();
+        }
+    }
+
+    // Function to remove a product
+    function removeProduct() {
+        products.pop();
+        localStorage.setItem('products', JSON.stringify(products));
+        displayProducts();
+    }
+
+    // Function to display products
+    function displayProducts() {
+        const productList = document.getElementById('product-container');
+        productList.innerHTML = '';
+
+        products.forEach((product, index) => {
+            const productItem = document.createElement('div');
+            productItem.classList.add('product-item');
+            productItem.innerHTML = `
+                <div class="product-details">
+                    <p><strong>Type:</strong> ${product.type}</p>
+                    <p><strong>Description:</strong> ${product.description}</p>
+                    <p class="product-price">$${product.price}</p>
+                </div>
+                <button class="buy-button" onclick="showAdvert()">Buy Now</button>
+            `;
+            productList.appendChild(productItem);
+        });
+    }
+
+    // Function to show advertisement
+    function showAdvert() {
+        document.getElementById('advert').style.display = 'flex';
+        generateInvoiceCode();
+    }
+
+    // Function to generate invoice code
+    function generateInvoiceCode() {
+        const invoiceCode = generateRandomString(6);
+        document.getElementById('invoice-code').textContent = invoiceCode;
+    }
+// Function to complete payment
+function completePayment() {
+    const email = document.getElementById('email-input').value;
+    const product = products[0]; // Assuming only one product is available
+    const cost = product.price;
+    const invoiceCode = document.getElementById('invoice-code').textContent;
+    const mainMessage = `Please put this text in your payment note: Invoice Code: ${invoiceCode}\nCost: $${cost}\nJoin our Discord to complete the payment: https://discord.gg/4Hxg7EsC8B`;
+
+    // Combined message with warning
+    const message = mainMessage + '\n\nWARNING: Please take a screenshot of this information and join our Discord server, or we cannot assist you if you encounter any issues with your payment.';
+
+    // Display the combined message in the advertisement box
+    const advertBox = document.querySelector('.advert');
+    advertBox.innerHTML = `
+        <h2>Advertisement</h2>
+        <p>Please put your email address:</p>
+        <input type="email" id="email-input">
+        <p>${mainMessage}</p>
+        <p>WARNING: Please take a screenshot of this information and join our Discord server, or we cannot assist you if you encounter any issues with your payment.</p>
+        <button id="complete-payment-button">Complete Payment</button>
+    `;
+
+    // Add event listener to the "Complete Payment" button
+    document.getElementById('complete-payment-button').addEventListener('click', function() {
+        sendEmailAndRedirect(email, message, cost);
+    });
+}
+
+// Function to send email and redirect to PayPal payment
+function sendEmailAndRedirect(email, message, cost) {
+    // Send email to mhmylala@gmail.com
+    window.open(`mailto:dhamameh777@gmail.com?subject=New Order&body=${encodeURIComponent(message)}`);
+    
+    // Display invoice details
+    alert(message);
+    
+    // Redirect to PayPal payment
+    const paypalLink = `https://www.paypal.com/paypalme/davidhamameh?amount=${cost}`;
+    window.location.href = paypalLink;
+}
+
+// Function to generate a random string
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+
+    // Initial display of products
+    displayProducts();
+</script>
+</body>
+</html>

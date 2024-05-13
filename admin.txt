@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Page</title>
+    <style>
+        /* Your existing CSS styles */
+        body {
+            background-color: #20232a;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed to min-height */
+            overflow: hidden; /* Keep overflow hidden to enable the motion blur effect */
+            position: relative; /* Position relative to allow absolute positioning of snowflakes */
+        }
+
+        /* Custom scrollbar for webkit-based browsers */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 20px;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #444;
+            border: none;
+            color: #ffffff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            background-color: #555;
+        }
+
+        button[type="submit"],
+        button[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover,
+        button[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        .suggestion {
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .suggestion:hover {
+            transform: scale(1.02);
+            background-color: #444;
+        }
+
+        strong {
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Enable scrolling for the entire page */
+        body {
+            overflow: scroll;
+            overflow-x: hidden;
+            scrollbar-width: thin; /* For Firefox */
+        }
+
+        /* Motion blur effect on scroll */
+        body.motion-blur {
+            filtr: blur(5px);
+        }
+
+        /* Snowflake animation */
+        @keyframes snowflake-fall {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: snowflake-fall linear infinite;
+            animation-duration: 10s; /* Longer duration for slower fall */
+        }
+
+        /* Additional styles for shopping functionality */
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product img {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+        }
+
+        .product-info {
+            margin-left: 20px;
+        }
+
+        .buy-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: darkred;
+        }
+
+        .invoice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            display: none;
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #20232a;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #007bff;
+        }
+
+        #next-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        #next-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div id="snowflakes-container"></div>
+
+    <nav>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="#"></a></li>
+            <li><a href="">Communication Privacy</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Shopping Page</h1>
+
+        <!-- Product Form -->
+        <div class="form-container">
+            <form id="product-form">
+                <div class="form-group">
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Price:</label>
+                    <input type="number" id="product-price" required min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="product-quantity">Quantity:</label>
+                    <input type="number" id="product-quantity" required min="1">
+                </div>
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+
+        <!-- Product List -->
+        <div id="product-list"></div>
+
+        <!-- Invoice -->
+        <div class="invoice" id="invoice">
+            <p>Please take a screenshot to save it</p>
+            <ul id="invoice-items">
+                <!-- Items will be dynamically added here -->
+            </ul>
+            <button id="next-button" onclick="redirectToPayPal()">Next</button>
+        </div>
+
+        <footer>
+            &copy; 2023 MXM. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        // Function to save product data to localStorage
+        function saveProduct(name, price, quantity) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push({ name, price, quantity });
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        // Function to display saved products on page load
+        function displayProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            products.forEach((product, index) => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `<img src="product-image.jpg" alt="Product Image">
+                    <div class="product-info">
+                        <p><strong>Product Name:</strong> ${product.name}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                        <p>Quantity: ${product.quantity}</p>
+                        <button class="remove-button" onclick="removeProduct(${index})">Remove</button>
+                    </div>`;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        // Function to remove product from localStorage
+        function removeProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            displayProducts();
+        }
+
+        // Event listener for form submission
+        const productForm = document.getElementById('product-form');
+        productForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const name = document.getElementById('product-name').value;
+            const price = document.getElementById('product-price').value;
+            const quantity = document.getElementById('product-quantity').value;
+            saveProduct(name, price, quantity);
+            displayProducts();
+            productForm.reset();
+        });
+
+        // Display saved products on page load
+        displayProducts();
+
+        // Function to create snowflake elements
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+            snowflake.style.animationDuration = `${Math.random() * 3 + 8}s`; // Random duration for each snowflake
+            document.getElementById('snowflakes-container').appendChild(snowflake);
+
+            // Remove the snowflake from the DOM once it reaches the bottom
+            snowflake.addEventListener('animationiteration', () => {
+                snowflake.remove();
+            });
+        }
+
+        // Function to create snowflakes continuously
+        function createSnowflakesContinuously() {
+            setInterval(createSnowflake, 1000); // Create a snowflake every 1 second
+        }
+
+        // Call the function to create snowflakes continuously
+        createSnowflakesContinuously();
+
+        // Add motion blur effect on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 0) {
+                document.body.classList.add('motion-blur');
+            } else {
+                document.body.classList.remove('motion-blur');
+            }
+        });
+
+        // Shopping functionality
+        const buyButton = document.querySelector('.buy-button');
+        const invoice = document.getElementById('invoice');
+        const invoiceItems = document.getElementById('invoice-items');
+        const nextButton = document.getElementById('next-button');
+
+        buyButton.addEventListener('click', () => {
+            invoice.style.display = 'block';
+            const productName = 'Test';
+            const productPrice = 5;
+            const quantity = document.querySelector('.quantity-input').value;
+            const totalCost = productPrice * quantity;
+            const invoiceCode = generateInvoiceCode();
+            const listItem = document.createElement('li');
+            listItem.textContent = `${productName} x${quantity}`;
+            invoiceItems.appendChild(listItem);
+            invoice.innerHTML += `<p><strong>Invoice:</strong> ${invoiceCode}</p><p><strong>Total Cost:</strong> $${totalCost}</p>`;
+        });
+
+        function generateInvoiceCode() {
+            return Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+
+        function redirectToPayPal() {
+            var email = 'spisefc@example.com'; // Replace with the store's PayPal email
+            var amount = ''; // Optionally, you can pre-fill the amount here
+            var currency = ''; // Optionally, you can specify the currency here
+            var description = ''; // Optionally, you can provide a description here
+
+            var url = 'https://www.paypal.com/paypalme/davidhamameh';
+            url += '?recipient=' + encodeURIComponent(email);
+            url += '&amount=' + encodeURIComponent(amount);
+            url += '&currency=' + encodeURIComponent(currency);
+            url += '&description=' + encodeURIComponent(description);
+
+            window.location.href = url;
+        }
+
+        nextButton.addEventListener('click', () => {
+            const paypalLink = `https://www.paypal.com/paypalme/mhmylala`;
+            window.open(paypalLink, "_blank"); // Open PayPal link in a new tab
+        });
+
+    </script>
+</body>
+</html>

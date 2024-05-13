@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Management</title>
+</head>
+<body>
+
+<h2>Add Product</h2>
+<input type="text" id="productInput">
+<button onclick="addProduct()">Add</button>
+
+<h2>Products</h2>
+<ul id="productList"></ul>
+
+<script>
+// Function to add a product
+function addProduct() {
+    var productInput = document.getElementById("productInput");
+    var productName = productInput.value;
+
+    // Check if product name is not empty
+    if (productName.trim() !== '') {
+        // Get existing products from local storage
+        var products = JSON.parse(localStorage.getItem("products")) || [];
+
+        // Add new product
+        products.push(productName);
+
+        // Save updated products to local storage
+        localStorage.setItem("products", JSON.stringify(products));
+
+        // Update product list on the page
+        updateProductList();
+
+        // Clear input field
+        productInput.value = '';
+    }
+}
+
+// Function to remove a product
+function removeProduct(index) {
+    // Get existing products from local storage
+    var products = JSON.parse(localStorage.getItem("products"));
+
+    // Remove product at given index
+    products.splice(index, 1);
+
+    // Save updated products to local storage
+    localStorage.setItem("products", JSON.stringify(products));
+
+    // Update product list on the page
+    updateProductList();
+}
+
+// Function to update product list on the page
+function updateProductList() {
+    var productList = document.getElementById("productList");
+    var products = JSON.parse(localStorage.getItem("products")) || [];
+
+    // Clear existing list
+    productList.innerHTML = '';
+
+    // Add each product to the list
+    products.forEach(function(product, index) {
+        var li = document.createElement("li");
+        li.textContent = product;
+        
+        var removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.onclick = function() {
+            removeProduct(index);
+        };
+        
+        li.appendChild(removeButton);
+        productList.appendChild(li);
+    });
+}
+
+// Call updateProductList when the page loads to display existing products
+updateProductList();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #product-container {
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            width: calc(50% - 5px);
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .button {
+            width: calc(50% - 5px);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            background-color: #f00;
+            color: #fff;
+        }
+        .button:hover {
+            background-color: #d00;
+        }
+        .buy-button {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            background-color: #f00;
+            color: #fff;
+        }
+        .buy-button:hover {
+            background-color: #d00;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .product-item {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .product-item p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="product-container">
+        <div class="input-group">
+            <input type="text" id="product-type" placeholder="Product Type">
+        </div>
+        <div class="input-group">
+            <input type="text" id="product-description" placeholder="Product Description">
+        </div>
+        <div class="input-group">
+            <input type="number" id="product-price" placeholder="Product Price">
+        </div>
+        <button class="button" onclick="addProduct()">Add Product</button>
+        <button class="button" onclick="removeProduct()">Remove Product</button>
+        <div class="product-list" id="product-list"></div>
+    </div>
+    <script>
+        // Function to prompt for password
+        function promptForPassword() {
+            // Prompt the user for password
+            var password = prompt("Please enter the password:");
+            
+            // Check if password is correct
+            if (password === "apwjbahmed1") {
+                // If password is correct, display the content
+                displayContent();
+            } else {
+                // If password is incorrect, show an alert and reload the page
+                alert("Incorrect password! Please try again.");
+                location.reload();
+            }
+        }
+
+        // Function to display content after password verification
+        function displayContent() {
+            // Your existing JavaScript code goes here
+            // Check if products exist in local storage
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            // Function to add a product
+            function addProduct() {
+                // Your existing addProduct function
+            }
+
+            // Function to remove a product
+            function removeProduct() {
+                // Your existing removeProduct function
+            }
+
+            // Function to display products
+            function displayProducts() {
+                // Your existing displayProducts function
+            }
+
+            // Initial display of products
+            displayProducts();
+        }
+
+        // Call the function to prompt for password when the page loads
+        promptForPassword();
+    </script>
+
+    <script>
+        // Check if products exist in local storage
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+
+        // Function to add a product
+        function addProduct() {
+            const productType = document.getElementById('product-type').value;
+            const productDescription = document.getElementById('product-description').value;
+            const productPrice = document.getElementById('product-price').value;
+
+            if (productType && productDescription && productPrice) {
+                const product = {
+                    type: productType,
+                    description: productDescription,
+                    price: productPrice
+                };
+
+                products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+                displayProducts();
+            }
+        }
+
+        // Function to remove a product
+        function removeProduct() {
+            products.pop();
+            localStorage.setItem('products', JSON.stringify(products));
+            displayProducts();
+        }
+
+        // Function to display products
+        function displayProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.classList.add('product-item');
+                productItem.innerHTML = `
+                    <p><strong>Type:</strong> ${product.type}</p>
+                    <p><strong>Description:</strong> ${product.description}</p>
+                    <p><strong>Price:</strong> $${product.price}</p>
+                    <button class="buy-button">Buy Now</button>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        // Initial display of products
+        displayProducts();
+    </script>
+</body>
+</html>
